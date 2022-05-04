@@ -1,14 +1,27 @@
 import platform
 
 
-def clean(string, **kwargs):
+def clean(text: str, rule: dict = None) -> str:
     system = platform.system()
-    replace = {
-        "/": "",
-    }
     if system == "Windows":
-        pass
+        replace = {
+            "/": "",
+            "\\": "",
+            "|": "",
+            "<": "",
+            ">": "",
+            '"': "",
+            "?": "",
+            ":": "",
+            "*": "",
+        }
+        if rule:
+            for i in rule:
+                replace[i] = rule[i]
+        for i in replace:
+            text = text.replace(i, replace[i])
+    return text
 
 
 if __name__ == '__main__':
-    clean()
+    print(clean("1:2", {':': "-"}))
