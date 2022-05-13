@@ -2,22 +2,30 @@ import platform
 
 
 def clean(text: str, rule: dict = None) -> str:
-    system = platform.system()
-    if system == "Windows":
-        replace = {
-            "/": "",
-            "\\": "",
-            "|": "",
-            "<": "",
-            ">": "",
-            '"': "",
-            "?": "",
-            ":": "",
-            "*": "",
-        }
-        if rule:
-            for i in rule:
-                replace[i] = rule[i]
+    if rule:
+        for i in rule:
+            text = text.replace(i, rule[i])
+    else:
+        system = platform.system()
+        match system:
+            case "Windows":
+                replace = {
+                    "/": "",
+                    "\\": "",
+                    "|": "",
+                    "<": "",
+                    ">": "",
+                    '"': "",
+                    "?": "",
+                    ":": "",
+                    "*": "",
+                }
+            case "Linux":
+                pass
+            case "MACOS":
+                pass
+            case _:
+                replace = {}
         for i in replace:
             text = text.replace(i, replace[i])
     return text
