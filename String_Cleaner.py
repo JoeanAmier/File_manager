@@ -1,35 +1,36 @@
-import platform
+class StringCleaner:
+    def __init__(self):
+        """
+        Replace illegal Windows system characters contained in the string,
+        or you can customize the replacement rules.
+        """
+        self.replace = {
+            "/": "",
+            "\\": "",
+            "|": "",
+            "<": "",
+            ">": "",
+            '"': "",
+            "?": "",
+            ":": "",
+            "*": "",
+        }  # Windows system illegal characters
 
+    def set_rule(self, rule: dict[str, str]):
+        """
+        Set custom replacement rules.
 
-def clean(text: str, rule: dict = None) -> str:
-    if rule:
-        for i in rule:
-            text = text.replace(i, rule[i])
-    else:
-        system = platform.system()
-        match system:
-            case "Windows":
-                replace = {
-                    "/": "",
-                    "\\": "",
-                    "|": "",
-                    "<": "",
-                    ">": "",
-                    '"': "",
-                    "?": "",
-                    ":": "",
-                    "*": "",
-                }
-            case "Linux":
-                pass
-            case "MACOS":
-                pass
-            case _:
-                replace = {}
-        for i in replace:
-            text = text.replace(i, replace[i])
-    return text
+        :param rule: Replacement rules, dictionary keys and values are string types.
+        """
+        self.replace = rule
 
+    def filter(self, text: str) -> str:
+        """
+        Replace string.
 
-if __name__ == '__main__':
-    print(clean("1:2", {':': "-"}))
+        :param text: String to be processed.
+        :return: Replaced string.
+        """
+        for i in self.replace:
+            text = text.replace(i, self.replace[i])
+        return text
