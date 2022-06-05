@@ -2,8 +2,12 @@ import os
 
 
 class FileRename:
+    def __init__(self):
+        self.finish = False
+
     def run(self, root, rule):
-        pass
+        if items := self.get_files(root):
+            pass
 
     def get_files(self, root):
         return x if self.check_root(root) and any(x := os.listdir(root)) else None
