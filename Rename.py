@@ -7,7 +7,9 @@ class FileRename:
 
     def run(self, root, rule):
         if items := self.get_files(root):
-            pass
+            self.finish = True
+        else:
+            self.finish = False
 
     def get_files(self, root):
         return x if self.check_root(root) and any(x := os.listdir(root)) else None
