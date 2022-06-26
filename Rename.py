@@ -6,23 +6,21 @@ class FileRename:
         self.root = None  # 文件夹路径
         self.files = None  # （文件名，文件扩展名）
         self.rule = None  # 处理规则
-        self.finish = False
+        self.status = None  # 处理状态
 
     def run(self, root, rule):
-        if items := self.get_files(root):
-            self.finish = True
-        else:
-            self.finish = False
+        self.get_files(root)
 
     def get_files(self, root):
-        if self.check_root(root) and any(x := os.listdir(root)):
-            # 检查文件夹是否不为空
+        if self.check_root(root):
+            # 获取文件夹的文件
             def split_files(files):
                 """分离文件名和扩展名"""
                 return [os.path.splitext(i) for i in files]
 
+            _ = os.listdir(root)
             self.root = root
-            self.files = split_files([i for i in x if os.path.isfile(os.path.join(root, i))])
+            self.files = split_files([i for i in _ if os.path.isfile(os.path.join(root, i))])
 
     def type_filter(self, type_: list | tuple):
         """筛选指定类型的文件"""
@@ -37,8 +35,11 @@ class FileRename:
         self.root = None
         self.files = None
         self.rule = None
-        self.finish = False
+        self.status = None
 
 
 if __name__ == '__main__':
-    FileRename().get_files(r'C:\Users\youyq\PycharmProjects\File_manager')
+    t = FileRename()
+    t.get_files(r'C:\Users\youyq\PycharmProjects\File_manager')
+    print(t.root)
+    print(t.files)
