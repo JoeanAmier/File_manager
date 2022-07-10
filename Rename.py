@@ -1,6 +1,7 @@
 class FileRename:
-    pass
+    def remove_range(self, start, end):
+        pass
 
 
 if __name__ == '__main__':
-    pass
+    test = FileRename()
